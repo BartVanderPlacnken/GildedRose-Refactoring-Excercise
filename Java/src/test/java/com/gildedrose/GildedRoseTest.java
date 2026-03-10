@@ -307,6 +307,54 @@ class GildedRoseTest {
     New functionality tests
      */
 
+    @Test
+    void conjuredItemsDegradeTwiceAsFast() {
+        int initialQuality = 40;
+        int initialSellIn = 4;
+
+        Item conjuredManaCake = new Item("Conjured Mana Cake", initialSellIn, initialQuality);
+        Item[] inventory = new Item[]{conjuredManaCake};
+
+        initializeStore(inventory);
+
+        daysPass(4);
+
+        assertEquals(32, conjuredManaCake.quality);
+        assertEquals(0, conjuredManaCake.sellIn);
+    }
+
+    @Test
+    void conjuredItemsQualityCannotBeLowerThanZero() {
+        int initialQuality = 6;
+        int initialSellIn = 2;
+
+        Item conjuredItem = new Item("Conjured something", initialSellIn, initialQuality);
+        Item[] inventory = new Item[]{conjuredItem};
+
+        initializeStore(inventory);
+
+        daysPass(3);
+
+        assertEquals(0, conjuredItem.quality);
+        assertEquals(-1, conjuredItem.sellIn);
+    }
+
+    @Test
+    void conjuredItemsQualityCannotBeHigherThanFifty() {
+        int initialQuality = 60;
+        int initialSellIn = 2;
+
+        Item conjuredItem = new Item("Conjured something", initialSellIn, initialQuality);
+        Item[] inventory = new Item[]{conjuredItem};
+
+        initializeStore(inventory);
+
+        daysPass(1);
+
+        assertEquals(48, conjuredItem.quality);
+        assertEquals(1, conjuredItem.sellIn);
+    }
+
     private void initializeStore(Item[] inventory) {
         store = new GildedRose(inventory);
     }

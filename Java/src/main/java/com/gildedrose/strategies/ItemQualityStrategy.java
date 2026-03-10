@@ -14,11 +14,11 @@ public interface ItemQualityStrategy {
         updateSellIn(item);
     }
 
+    void updateQuality(Item item);
+
     default boolean itemHasExpired(Item item) {
         return item.sellIn <= EXPIRATION_DATE;
     }
-
-    void updateQuality(Item item);
 
     default void updateSellIn(Item item) {
         item.sellIn = item.sellIn - ItemSellInChangeSpeed.REGULAR.speed;
