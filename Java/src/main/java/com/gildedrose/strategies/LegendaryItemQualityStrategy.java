@@ -7,8 +7,13 @@ public class LegendaryItemQualityStrategy implements ItemQualityStrategy{
     public static final int LEGENDARY_QUALITY = 80;
 
     @Override
-    public void updateQuality(Item item) {
+    public void setQualityIfBoundsAreExceeded(Item item) {
         item.quality = LEGENDARY_QUALITY;
+    }
+
+    @Override
+    public void updateQuality(Item item) {
+        //no-op, quality for legendary items never change
     }
 
     @Override

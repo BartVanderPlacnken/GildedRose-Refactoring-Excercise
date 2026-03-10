@@ -9,6 +9,10 @@ public interface ItemQualityStrategy {
     int MAXIMUM_QUALITY = 50;
     int MINIMUM_QUALITY = 0;
 
+    default void setQualityIfBoundsAreExceeded(Item item) {
+        item.quality = Math.max(MINIMUM_QUALITY, Math.min(MAXIMUM_QUALITY, item.quality));
+    }
+
     default void updateItem(Item item) {
         updateQuality(item);
         updateSellIn(item);

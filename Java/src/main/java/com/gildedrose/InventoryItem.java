@@ -14,27 +14,23 @@ public class InventoryItem {
 
     public InventoryItem(Item item) {
         this.item = item;
-        checkBounds();
-    }
-
-    private void checkBounds() {
-        if(isLegendaryItem()) {
-            item.quality = 80;
-        } else {
-            item.quality = Math.max(0, Math.min(50, item.quality));
-        }
     }
 
     public void updateQuality() {
         if(isBackStagePass()) {
+            backStagePassQualityStrategy.setQualityIfBoundsAreExceeded(item);
             backStagePassQualityStrategy.updateItem(item);
         } else if(isAgedBrie()) {
+            agedBrieQualityStrategy.setQualityIfBoundsAreExceeded(item);
             agedBrieQualityStrategy.updateItem(item);
         } else if(isLegendaryItem()) {
+            legendaryQualityStrategy.setQualityIfBoundsAreExceeded(item);
             legendaryQualityStrategy.updateItem(item);
         } else if(isConjuredItem()) {
+            conjuredItemQualityStrategy.setQualityIfBoundsAreExceeded(item);
             conjuredItemQualityStrategy.updateItem(item);
         } else {
+            normalItemQualityStrategy.setQualityIfBoundsAreExceeded(item);
             normalItemQualityStrategy.updateItem(item);
         }
     }

@@ -9,7 +9,7 @@ class GildedRose {
         this.items = items;
     }
 
-    public void updateQuality() {
+    public void passDayInTheStore() {
         Arrays.stream(items)
             .map(InventoryItem::new)
             .forEach(InventoryItem::updateQuality);
