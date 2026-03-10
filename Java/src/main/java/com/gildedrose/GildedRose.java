@@ -8,55 +8,83 @@ class GildedRose {
     }
 
     public void updateQuality() {
-        for (int i = 0; i < items.length; i++) {
-            if (!items[i].name.equals("Aged Brie")
-                    && !items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                if (items[i].quality > 0) {
-                    if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                        items[i].quality = items[i].quality - 1;
+        for (Item item : items) {
+            if (isNotIncreasingQualityItem(item)) {
+                if (item.quality > 0) {
+                    if (!isLegendaryItem(item)) {
+                        decreaseQualityAtIndexByOne(item);
                     }
                 }
             } else {
-                if (items[i].quality < 50) {
-                    items[i].quality = items[i].quality + 1;
+                if (item.quality < 50) {
+                    increaseQualityAtIndexByOne(item);
 
-                    if (items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].sellIn < 11) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
+                    if (isBackStagePass(item)) {
+                        if (item.sellIn < 11) {
+                            if (item.quality < 50) {
+                                increaseQualityAtIndexByOne(item);
                             }
                         }
 
-                        if (items[i].sellIn < 6) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
+                        if (item.sellIn < 6) {
+                            if (item.quality < 50) {
+                                increaseQualityAtIndexByOne(item);
                             }
                         }
                     }
                 }
             }
 
-            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                items[i].sellIn = items[i].sellIn - 1;
+            if (!isLegendaryItem(item)) {
+                decreaseSellInAtIndexByOne(item);
             }
 
-            if (items[i].sellIn < 0) {
-                if (!items[i].name.equals("Aged Brie")) {
-                    if (!items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                        if (items[i].quality > 0) {
-                            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
-                                items[i].quality = items[i].quality - 1;
+            if (item.sellIn < 0) {
+                if (!isAgedBrie(item)) {
+                    if (!isBackStagePass(item)) {
+                        if (item.quality > 0) {
+                            if (!isLegendaryItem(item)) {
+                                decreaseQualityAtIndexByOne(item);
                             }
                         }
                     } else {
-                        items[i].quality = items[i].quality - items[i].quality;
+                        item.quality = 0;
                     }
                 } else {
-                    if (items[i].quality < 50) {
-                        items[i].quality = items[i].quality + 1;
+                    if (item.quality < 50) {
+                        increaseQualityAtIndexByOne(item);
                     }
                 }
             }
         }
+    }
+
+    private boolean isBackStagePass(Item item) {
+        return item.name.equals("Backstage passes to a TAFKAL80ETC concert");
+    }
+
+    private void decreaseSellInAtIndexByOne(Item item) {
+        item.sellIn = item.sellIn - 1;
+    }
+
+    private void increaseQualityAtIndexByOne(Item item) {
+        item.quality = item.quality + 1;
+    }
+
+    private void decreaseQualityAtIndexByOne(Item item) {
+        item.quality = item.quality - 1;
+    }
+
+    private boolean isLegendaryItem(Item item) {
+        return item.name.equals("Sulfuras, Hand of Ragnaros");
+    }
+
+    private boolean isNotIncreasingQualityItem(Item item) {
+        return !isAgedBrie(item)
+            && !isBackStagePass(item);
+    }
+
+    private boolean isAgedBrie(Item item) {
+        return item.name.equals("Aged Brie");
     }
 }
