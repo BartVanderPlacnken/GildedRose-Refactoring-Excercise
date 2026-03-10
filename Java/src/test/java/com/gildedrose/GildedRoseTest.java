@@ -221,6 +221,21 @@ class GildedRoseTest {
         assertEquals(initialSellIn - 1, backStagePass.sellIn);
     }
 
+    @Test
+    void backStagePassesQualityCannotIncreaseIf50() {
+        int initialQuality = 50;
+        int initialSellIn = 5;
+        Item backStagePass = new Item("Backstage passes to a TAFKAL80ETC concert", initialSellIn, initialQuality);
+        Item[] inventory = new Item[]{backStagePass};
+
+        initializeStore(inventory);
+
+        daysPass(1);
+
+        assertEquals(50, backStagePass.quality);
+        assertEquals(initialSellIn - 1, backStagePass.sellIn);
+    }
+
     /*
     Extra tests for full branch coverage
      */

@@ -1,13 +1,13 @@
 package com.gildedrose;
 
-public class NormalItemQualityStrategy implements ItemQualityStrategy{
+public class AgedBrieQualityStrategy implements ItemQualityStrategy{
 
-    public static final int QUALITY_MINIMUM = 0;
+    public static final int QUALITY_MAXIMUM = 50;
 
     @Override
     public void updateQuality(Item item) {
         ItemQualityChangeSpeed qualityModifier = itemHasExpired(item) ? ItemQualityChangeSpeed.HASTY : ItemQualityChangeSpeed.REGULAR;
-        item.quality = Math.max(QUALITY_MINIMUM, item.quality - qualityModifier.speed);
+        item.quality = Math.min(QUALITY_MAXIMUM, item.quality + qualityModifier.speed);
     }
 
     @Override

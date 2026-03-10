@@ -1,5 +1,7 @@
 package com.gildedrose;
 
+import java.util.Arrays;
+
 class GildedRose {
     Item[] items;
 
@@ -8,10 +10,10 @@ class GildedRose {
     }
 
     public void updateQuality() {
-        for (Item item : items) {
-            InventoryItem inventoryItem = new InventoryItem(item);
-            inventoryItem.updateQuality();
-        }
+        Arrays.stream(items)
+            .map(InventoryItem::new)
+            .forEach(InventoryItem::updateQuality);
+
     }
 
 }

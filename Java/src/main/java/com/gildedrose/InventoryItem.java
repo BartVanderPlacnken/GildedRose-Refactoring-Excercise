@@ -5,6 +5,7 @@ public class InventoryItem {
     private final Item item;
 
     final ItemQualityStrategy normalItemQualityStrategy = new NormalItemQualityStrategy();
+    final ItemQualityStrategy agedBrieQualityStrategy = new AgedBrieQualityStrategy();
 
     public InventoryItem(Item item) {
         this.item = item;
@@ -13,41 +14,29 @@ public class InventoryItem {
     public void updateQuality() {
         if(isNormalItem()) {
             normalItemQualityStrategy.updateItem(item);
+        } else if(isAgedBrie()) {
+            agedBrieQualityStrategy.updateItem(item);
         }
 
-        if (isIncreasingQualityItem()) {
+        if (isBackStagePass()) {
             if (qualityCanIncrease()) {
                 increaseQualityAtIndexByOne();
 
-                if (isBackStagePass()) {
-                    if (item.sellIn < 11) {
-                        if (qualityCanIncrease()) {
-                            increaseQualityAtIndexByOne();
-                        }
+                if (item.sellIn < 11) {
+                    if (qualityCanIncrease()) {
+                        increaseQualityAtIndexByOne();
                     }
+                }
 
-                    if (item.sellIn < 6) {
-                        if (qualityCanIncrease()) {
-                            increaseQualityAtIndexByOne();
-                        }
+                if (item.sellIn < 6) {
+                    if (qualityCanIncrease()) {
+                        increaseQualityAtIndexByOne();
                     }
                 }
             }
-        }
-
-        if (!isLegendaryItem() && !isNormalItem()) {
             decreaseSellInAtIndexByOne();
-        }
-
-        if (item.sellIn < 0) {
-            if (!isAgedBrie()) {
-                if (isBackStagePass()) {
-                    item.quality = 0;
-                }
-            } else {
-                if (qualityCanIncrease()) {
-                    increaseQualityAtIndexByOne();
-                }
+            if(item.sellIn < 0) {
+                item.quality = 0;
             }
         }
     }
@@ -70,10 +59,6 @@ public class InventoryItem {
 
     private boolean isLegendaryItem() {
         return item.name.equals("Sulfuras, Hand of Ragnaros");
-    }
-
-    private boolean isIncreasingQualityItem() {
-        return isAgedBrie() || isBackStagePass();
     }
 
     private boolean isAgedBrie() {
