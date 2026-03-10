@@ -4,30 +4,30 @@ public class InventoryItem {
 
     private final Item item;
 
+    final ItemQualityStrategy normalItemQualityStrategy = new NormalItemQualityStrategy();
+
     public InventoryItem(Item item) {
         this.item = item;
     }
 
     public void updateQuality() {
-        if (isNotIncreasingQualityItem()) {
-            if (item.quality > 0) {
-                if (!isLegendaryItem()) {
-                    decreaseQualityAtIndexByOne();
-                }
-            }
-        } else {
-            if (item.quality < 50) {
+        if(isNormalItem()) {
+            normalItemQualityStrategy.updateItem(item);
+        }
+
+        if (isIncreasingQualityItem()) {
+            if (qualityCanIncrease()) {
                 increaseQualityAtIndexByOne();
 
                 if (isBackStagePass()) {
                     if (item.sellIn < 11) {
-                        if (item.quality < 50) {
+                        if (qualityCanIncrease()) {
                             increaseQualityAtIndexByOne();
                         }
                     }
 
                     if (item.sellIn < 6) {
-                        if (item.quality < 50) {
+                        if (qualityCanIncrease()) {
                             increaseQualityAtIndexByOne();
                         }
                     }
@@ -35,27 +35,25 @@ public class InventoryItem {
             }
         }
 
-        if (!isLegendaryItem()) {
+        if (!isLegendaryItem() && !isNormalItem()) {
             decreaseSellInAtIndexByOne();
         }
 
         if (item.sellIn < 0) {
             if (!isAgedBrie()) {
-                if (!isBackStagePass()) {
-                    if (item.quality > 0) {
-                        if (!isLegendaryItem()) {
-                            decreaseQualityAtIndexByOne();
-                        }
-                    }
-                } else {
+                if (isBackStagePass()) {
                     item.quality = 0;
                 }
             } else {
-                if (item.quality < 50) {
+                if (qualityCanIncrease()) {
                     increaseQualityAtIndexByOne();
                 }
             }
         }
+    }
+
+    private boolean qualityCanIncrease() {
+        return item.quality < 50;
     }
 
     private boolean isBackStagePass() {
@@ -70,20 +68,19 @@ public class InventoryItem {
         item.quality = item.quality + 1;
     }
 
-    private void decreaseQualityAtIndexByOne() {
-        item.quality = item.quality - 1;
-    }
-
     private boolean isLegendaryItem() {
         return item.name.equals("Sulfuras, Hand of Ragnaros");
     }
 
-    private boolean isNotIncreasingQualityItem() {
-        return !isAgedBrie()
-            && !isBackStagePass();
+    private boolean isIncreasingQualityItem() {
+        return isAgedBrie() || isBackStagePass();
     }
 
     private boolean isAgedBrie() {
         return item.name.equals("Aged Brie");
+    }
+
+    private boolean isNormalItem() {
+        return !isLegendaryItem() && !isAgedBrie() && !isBackStagePass();
     }
 }

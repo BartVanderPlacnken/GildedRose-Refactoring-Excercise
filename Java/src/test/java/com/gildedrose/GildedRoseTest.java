@@ -68,6 +68,25 @@ class GildedRoseTest {
     }
 
     @Test
+    void qualityDegradesFasterAfterSellByDateButIsCloseToZero() {
+        int initialQuality = 3;
+        int initialSellIn = 2;
+        Item randomItem = new Item("random-item", initialSellIn, initialQuality);
+        Item[] items = new Item[]{randomItem};
+        initializeStore(items);
+
+        daysPass(initialSellIn);
+
+        assertEquals(initialQuality - initialSellIn, randomItem.quality, "Quality is decreasing normally");
+        assertEquals(0, randomItem.sellIn, "Two days have passed, sell by date reached");
+
+        daysPass(1);
+
+        assertEquals(0, randomItem.quality, "quality has started to degrade faster, but still cannot get below zero");
+        assertEquals(-1, randomItem.sellIn, "The sell by date has passed");
+    }
+
+    @Test
     void agedBrieIncreasesInQuality() {
         int initialQuality = 10;
         int initialSellIn = 2;
