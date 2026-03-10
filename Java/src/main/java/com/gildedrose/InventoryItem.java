@@ -1,5 +1,7 @@
 package com.gildedrose;
 
+import com.gildedrose.strategies.*;
+
 public class InventoryItem {
 
     private final Item item;

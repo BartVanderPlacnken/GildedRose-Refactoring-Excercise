@@ -1,4 +1,6 @@
-package com.gildedrose;
+package com.gildedrose.strategies;
+
+import com.gildedrose.Item;
 
 public class LegendaryItemQualityStrategy implements ItemQualityStrategy{
 
