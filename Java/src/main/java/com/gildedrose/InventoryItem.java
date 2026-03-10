@@ -6,33 +6,30 @@ public class InventoryItem {
 
     private final Item item;
 
-    final ItemQualityStrategy normalItemQualityStrategy = new NormalItemQualityStrategy();
-    final ItemQualityStrategy agedBrieQualityStrategy = new AgedBrieQualityStrategy();
-    final ItemQualityStrategy legendaryQualityStrategy = new LegendaryItemQualityStrategy();
-    final ItemQualityStrategy backStagePassQualityStrategy = new BackStagePassQualityStrategy();
-    final ItemQualityStrategy conjuredItemQualityStrategy = new ConjuredItemQualityStrategy();
+    private ItemQualityStrategy itemQualityStrategy;
 
     public InventoryItem(Item item) {
         this.item = item;
+        determineAndSetItemQualityStrategy();
+        itemQualityStrategy.initializeItemInBounds(item);
+    }
+
+    private void determineAndSetItemQualityStrategy() {
+        if(isLegendaryItem()) {
+            itemQualityStrategy = new LegendaryItemQualityStrategy();
+        } else if (isConjuredItem()) {
+            itemQualityStrategy = new ConjuredItemQualityStrategy();
+        } else if (isBackStagePass()) {
+            itemQualityStrategy = new BackStagePassQualityStrategy();
+        } else if (isAgedBrie()) {
+            itemQualityStrategy = new AgedBrieQualityStrategy();
+        } else {
+            itemQualityStrategy =  new NormalItemQualityStrategy();
+        }
     }
 
     public void updateQuality() {
-        if(isBackStagePass()) {
-            backStagePassQualityStrategy.setQualityIfBoundsAreExceeded(item);
-            backStagePassQualityStrategy.updateItem(item);
-        } else if(isAgedBrie()) {
-            agedBrieQualityStrategy.setQualityIfBoundsAreExceeded(item);
-            agedBrieQualityStrategy.updateItem(item);
-        } else if(isLegendaryItem()) {
-            legendaryQualityStrategy.setQualityIfBoundsAreExceeded(item);
-            legendaryQualityStrategy.updateItem(item);
-        } else if(isConjuredItem()) {
-            conjuredItemQualityStrategy.setQualityIfBoundsAreExceeded(item);
-            conjuredItemQualityStrategy.updateItem(item);
-        } else {
-            normalItemQualityStrategy.setQualityIfBoundsAreExceeded(item);
-            normalItemQualityStrategy.updateItem(item);
-        }
+        itemQualityStrategy.updateItem(item);
     }
 
     private boolean isConjuredItem() {
