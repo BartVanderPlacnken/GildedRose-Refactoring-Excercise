@@ -2,16 +2,9 @@ package com.gildedrose;
 
 public class NormalItemQualityStrategy implements ItemQualityStrategy{
 
-    public static final int QUALITY_MINIMUM = 0;
-
     @Override
     public void updateQuality(Item item) {
         ItemQualityChangeSpeed qualityModifier = itemHasExpired(item) ? ItemQualityChangeSpeed.HASTY : ItemQualityChangeSpeed.REGULAR;
-        item.quality = Math.max(QUALITY_MINIMUM, item.quality - qualityModifier.speed);
-    }
-
-    @Override
-    public void updateSellIn(Item item) {
-        item.sellIn = item.sellIn - ItemSellInChangeSpeed.REGULAR.speed;
+        item.quality = Math.max(MINIMUM_QUALITY, item.quality - qualityModifier.speed);
     }
 }

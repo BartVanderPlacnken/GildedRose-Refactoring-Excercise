@@ -288,9 +288,6 @@ class GildedRoseTest {
         assertEquals(initialSellIn, sulfuras.sellIn);
     }
 
-/*
-    This test fails since only tickets for TAFKAL80ETC are considered backstage passes
-    Refactor the original code to include any kind of event
     @Test
     void backstagePassesCanExistForDifferentEvents() {
         int initialQuality = 49;
@@ -304,7 +301,7 @@ class GildedRoseTest {
 
         assertEquals(50, backStagePass.quality);
         assertEquals(initialSellIn - 1, backStagePass.sellIn);
-    }*/
+    }
 
     /*
     New functionality tests
