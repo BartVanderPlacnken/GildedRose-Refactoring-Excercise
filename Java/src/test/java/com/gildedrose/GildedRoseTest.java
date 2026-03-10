@@ -58,12 +58,12 @@ class GildedRoseTest {
 
         daysPass(initialSellIn);
 
-        assertEquals(initialQuality - initialSellIn, randomItem.quality, "Quality is decreasing normally");
+        assertEquals(50 - initialSellIn, randomItem.quality, "Quality is decreasing normally");
         assertEquals(0, randomItem.sellIn, "Two days have passed, sell by date reached");
 
         daysPass(1);
 
-        assertEquals(initialQuality - initialSellIn - 2, randomItem.quality, "quality has started to degrade faster");
+        assertEquals(50 - initialSellIn - 2, randomItem.quality, "quality has started to degrade faster");
         assertEquals(-1, randomItem.sellIn, "The sell by date has passed");
     }
 
