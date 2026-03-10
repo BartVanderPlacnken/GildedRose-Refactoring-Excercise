@@ -6,6 +6,7 @@ public class InventoryItem {
 
     final ItemQualityStrategy normalItemQualityStrategy = new NormalItemQualityStrategy();
     final ItemQualityStrategy agedBrieQualityStrategy = new AgedBrieQualityStrategy();
+    final ItemQualityStrategy legendaryQualityStrategy = new LegendaryItemQualityStrategy();
 
     public InventoryItem(Item item) {
         this.item = item;
@@ -16,6 +17,8 @@ public class InventoryItem {
             normalItemQualityStrategy.updateItem(item);
         } else if(isAgedBrie()) {
             agedBrieQualityStrategy.updateItem(item);
+        } else if(isLegendaryItem()) {
+            legendaryQualityStrategy.updateItem(item);
         }
 
         if (isBackStagePass()) {
@@ -58,7 +61,7 @@ public class InventoryItem {
     }
 
     private boolean isLegendaryItem() {
-        return item.name.equals("Sulfuras, Hand of Ragnaros");
+        return item.name.toLowerCase().startsWith("sulfuras");
     }
 
     private boolean isAgedBrie() {

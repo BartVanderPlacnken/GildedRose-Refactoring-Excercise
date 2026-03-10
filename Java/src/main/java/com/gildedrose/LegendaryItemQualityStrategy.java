@@ -1,0 +1,16 @@
+package com.gildedrose;
+
+public class LegendaryItemQualityStrategy implements ItemQualityStrategy{
+
+    public static final int LEGENDARY_QUALITY = 80;
+
+    @Override
+    public void updateQuality(Item item) {
+        item.quality = LEGENDARY_QUALITY;
+    }
+
+    @Override
+    public void updateSellIn(Item item) {
+        //no-op, sell in date for legendary items never changes
+    }
+}

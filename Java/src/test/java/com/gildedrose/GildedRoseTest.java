@@ -268,12 +268,6 @@ class GildedRoseTest {
         assertEquals(initialSellIn, sulfuras.sellIn);
     }
 
-    /*
-    Missing functionality
-     */
-    /*
-    This test doesn't work yet because of the original code
-    Should work after refactoring
     @Test
     void sulfurasQualityIsAlways80() {
         int initialQuality = 49;
@@ -286,13 +280,13 @@ class GildedRoseTest {
         daysPass(initialSellIn);
 
         assertEquals(80, sulfuras.quality, "Quality is always 80");
-        assertEquals(0, sulfuras.sellIn);
+        assertEquals(initialSellIn, sulfuras.sellIn);
 
         daysPass(1);
 
         assertEquals(80, sulfuras.quality);
-        assertEquals(-1, sulfuras.sellIn);
-    }*/
+        assertEquals(initialSellIn, sulfuras.sellIn);
+    }
 
 /*
     This test fails since only tickets for TAFKAL80ETC are considered backstage passes
