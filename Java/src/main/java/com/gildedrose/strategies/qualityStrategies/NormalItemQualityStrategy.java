@@ -4,9 +4,14 @@ import com.gildedrose.ItemTypeDecorator;
 
 public class NormalItemQualityStrategy extends ItemQualityStrategy{
 
+    private static final int REGULAR_QUALITY_DEGRADATION = 1;
+    private static final int HASTY_QUALITY_DEGRADATION = 2;
+
     @Override
     public void updateQuality(ItemTypeDecorator item) {
-        ItemQualityChangeSpeed qualityModifier = itemHasExpired(item) ? ItemQualityChangeSpeed.HASTY : ItemQualityChangeSpeed.REGULAR;
-        item.setQuality(Math.max(MINIMUM_QUALITY, item.getQuality() - qualityModifier.speed));
+        int degradationFactor = itemHasExpired(item)
+            ? HASTY_QUALITY_DEGRADATION
+            : REGULAR_QUALITY_DEGRADATION;
+        item.setQuality(Math.max(MINIMUM_QUALITY, item.getQuality() - degradationFactor));
     }
 }

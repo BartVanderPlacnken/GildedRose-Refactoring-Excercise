@@ -6,25 +6,29 @@ public class BackStagePassQualityStrategy extends ItemQualityStrategy {
 
     private static final int HASTILY_EXPIRATION_THRESHOLD = 10;
     private static final int URGENTLY_EXPIRATION_THRESHOLD = 5;
+    private static final int REGULAR_APPRECIATION = 1;
+    private static final int HASTILY_APPRECIATION = 2;
+    private static final int URGENTLY_APPRECIATION = 3;
+
 
     @Override
     public void updateQuality(ItemTypeDecorator item) {
         if(itemHasExpired(item)) {
             item.setQuality(MINIMUM_QUALITY);
         } else {
-            ItemQualityChangeSpeed itemQualityChangeSpeed = determineItemQualityChangeSpeed(item);
-            item.setQuality(Math.min(MAXIMUM_QUALITY, item.getQuality() + itemQualityChangeSpeed.speed));
+            int itemQualityAppreciationFactor = itemQualityAppreciationFactor(item);
+            item.setQuality(Math.min(MAXIMUM_QUALITY, item.getQuality() + itemQualityAppreciationFactor));
         }
     }
 
-    private static ItemQualityChangeSpeed determineItemQualityChangeSpeed(ItemTypeDecorator item) {
-        ItemQualityChangeSpeed itemQualityChangeSpeed = ItemQualityChangeSpeed.REGULAR;
+    private static int itemQualityAppreciationFactor(ItemTypeDecorator item) {
+        int appreciationFactor = REGULAR_APPRECIATION;
         if (itemWillExpireUrgently(item)) {
-            itemQualityChangeSpeed = ItemQualityChangeSpeed.URGENT;
+            appreciationFactor = URGENTLY_APPRECIATION;
         } else if (itemWillExpireHastily(item)) {
-            itemQualityChangeSpeed = ItemQualityChangeSpeed.HASTY;
+            appreciationFactor = HASTILY_APPRECIATION;
         }
-        return itemQualityChangeSpeed;
+        return appreciationFactor;
     }
 
     private static boolean itemWillExpireHastily(ItemTypeDecorator item) {
