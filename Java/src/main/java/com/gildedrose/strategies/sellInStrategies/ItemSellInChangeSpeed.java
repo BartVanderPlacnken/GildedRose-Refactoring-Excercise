@@ -1,4 +1,4 @@
-package com.gildedrose.strategies;
+package com.gildedrose.strategies.sellInStrategies;
 
 public enum ItemSellInChangeSpeed {
     REGULAR(1);

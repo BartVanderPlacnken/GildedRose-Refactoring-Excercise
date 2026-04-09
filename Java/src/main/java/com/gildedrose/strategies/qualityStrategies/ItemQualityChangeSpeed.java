@@ -1,4 +1,4 @@
-package com.gildedrose.strategies;
+package com.gildedrose.strategies.qualityStrategies;
 
 public enum ItemQualityChangeSpeed {
 
