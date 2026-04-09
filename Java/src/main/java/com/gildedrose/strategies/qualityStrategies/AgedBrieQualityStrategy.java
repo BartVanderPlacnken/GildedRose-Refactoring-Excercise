@@ -9,7 +9,7 @@ public class AgedBrieQualityStrategy extends ItemQualityStrategy{
 
     @Override
     public void updateQuality(ItemTypeDecorator item) {
-        int qualityModifier = itemHasExpired(item)
+        int qualityModifier = item.hasExpired()
             ? HASTY_SPEED_APPRECIATION
             : REGULAR_SPEED_APPRECIATION;
         item.setQuality(Math.min(MAXIMUM_QUALITY, item.getQuality() + qualityModifier));

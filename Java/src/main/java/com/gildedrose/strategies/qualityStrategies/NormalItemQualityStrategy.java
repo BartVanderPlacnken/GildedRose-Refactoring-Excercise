@@ -9,7 +9,7 @@ public class NormalItemQualityStrategy extends ItemQualityStrategy{
 
     @Override
     public void updateQuality(ItemTypeDecorator item) {
-        int degradationFactor = itemHasExpired(item)
+        int degradationFactor = item.hasExpired()
             ? HASTY_QUALITY_DEGRADATION
             : REGULAR_QUALITY_DEGRADATION;
         item.setQuality(Math.max(MINIMUM_QUALITY, item.getQuality() - degradationFactor));

@@ -7,6 +7,8 @@ import com.gildedrose.strategies.sellInStrategies.NormalItemSellInStrategy;
 
 public class ItemTypeDecorator {
 
+    private static final int EXPIRATION_DATE = 0;
+
     private final Item item;
     private final ItemQualityStrategy itemQualityStrategy;
     private final ItemSellInStrategy itemSellInStrategy;
@@ -32,6 +34,10 @@ public class ItemTypeDecorator {
 
     public void setQuality(int quality) {
         item.quality = quality;
+    }
+
+    public boolean hasExpired() {
+        return this.getSellIn() <= EXPIRATION_DATE;
     }
 
     private ItemQualityStrategy determineItemQualityStrategy() {

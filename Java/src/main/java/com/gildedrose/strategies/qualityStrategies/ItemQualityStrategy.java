@@ -4,8 +4,6 @@ import com.gildedrose.ItemTypeDecorator;
 
 public abstract class ItemQualityStrategy {
 
-    int EXPIRATION_DATE = 0;
-
     int MAXIMUM_QUALITY = 50;
     int MINIMUM_QUALITY = 0;
 
@@ -14,8 +12,4 @@ public abstract class ItemQualityStrategy {
     }
 
     public abstract void updateQuality(ItemTypeDecorator item);
-
-    boolean itemHasExpired(ItemTypeDecorator item) {
-        return item.getSellIn() <= EXPIRATION_DATE;
-    }
 }

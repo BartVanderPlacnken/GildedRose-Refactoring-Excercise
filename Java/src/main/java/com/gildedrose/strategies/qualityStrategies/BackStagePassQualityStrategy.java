@@ -13,7 +13,7 @@ public class BackStagePassQualityStrategy extends ItemQualityStrategy {
 
     @Override
     public void updateQuality(ItemTypeDecorator item) {
-        if(itemHasExpired(item)) {
+        if(item.hasExpired()) {
             item.setQuality(MINIMUM_QUALITY);
         } else {
             int itemQualityAppreciationFactor = itemQualityAppreciationFactor(item);
